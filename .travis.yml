@@ -19,10 +19,10 @@ after_success:
   # Log in to docker CLI
   - sudo echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push to docker hub
-  - sudo docker tag washablealt/multi-client:firstimagepush tag washablealt/multi-docker:multi-client
-  - sudo docker tag washablealt/multi-nginx:firstimagepush tag washablealt/multi-docker:multi-nginx
-  - sudo docker tag washablealt/multi-server:firstimagepush tag washablealt/multi-docker:multi-server
-  - sudo docker tag washablealt/multi-worker:firstimagepush tag washablealt/multi-docker:multi-worker
+  - sudo docker tag washablealt/multi-client:firstimagepush washablealt/multi-docker:multi-client
+  - sudo docker tag washablealt/multi-nginx:firstimagepush washablealt/multi-docker:multi-nginx
+  - sudo docker tag washablealt/multi-server:firstimagepush washablealt/multi-docker:multi-server
+  - sudo docker tag washablealt/multi-worker:firstimagepush washablealt/multi-docker:multi-worker
   - sudo docker push washablealt/multi-client:firstimagepush
   - sudo docker push washablealt/multi-nginx:firstimagepush
   - sudo docker push washablealt/multi-server:firstimagepush
