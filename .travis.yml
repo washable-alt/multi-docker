@@ -4,22 +4,26 @@ services:
   - docker
 
 before_install:
-  - sudo docker build -t washable-alt/react-test -f ./client/Dockerfile.dev ./client
+  - sudo docker build -t washablealt/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   # previously - docker run washable-alt/react-test npm test -- --coverage
-  - sudo docker run -e CI=true washable-alt/react-test npm test
+  - sudo docker run -e CI=true washablealt/react-test npm test
   
 after_success:
-  - sudo docker build -t washable-alt/multi-client ./client
-  - sudo docker build -t washable-alt/multi-nginx ./nginx
-  - sudo docker build -t washable-alt/multi-server ./server
-  - sudo docker build -t washable-alt/multi-worker ./worker
+  - sudo docker build -t washablealt/multi-client ./client
+  - sudo docker build -t washablealt/multi-nginx ./nginx
+  - sudo docker build -t washablealt/multi-server ./server
+  - sudo docker build -t washablealt/multi-worker ./worker
 
   # Log in to docker CLI
   - sudo echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push to docker hub
-  - sudo docker push washable-alt/multi-client
-  - sudo docker push washable-alt/multi-nginx
-  - sudo docker push washable-alt/multi-server
-  - sudo docker push washable-alt/multi-worker
+  - sudo docker tag washablealt/multi-docker:latest washablealt/multi-client:firstimagepush
+  - sudo docker tag washablealt/multi-docker:latest washablealt/multi-nginx:firstimagepush
+  - sudo docker tag washablealt/multi-docker:latest washablealt/multi-server:firstimagepush
+  - sudo docker tag washablealt/multi-docker:latest washablealt/multi-worker:firstimagepush
+  - sudo docker push washablealt/multi-client:firstimagepush
+  - sudo docker push washablealt/multi-nginx:firstimagepush
+  - sudo docker push washablealt/multi-server:firstimagepush
+  - sudo docker push washablealt/multi-worker:firstimagepush
