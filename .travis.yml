@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - sudo docker build -t washablealt/react-test:v1 -f ./client/Dockerfile.dev ./client
+  - sudo docker build -t washablealt/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   # previously - docker run washable-alt/react-test npm test -- --coverage
