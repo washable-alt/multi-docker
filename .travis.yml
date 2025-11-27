@@ -4,26 +4,29 @@ services:
   - docker
 
 before_install:
-  - sudo docker build -t washablealt/react-test -f ./client/Dockerfile.dev ./client
+  - sudo docker build -t react-test:v1 -f ./client/Dockerfile.dev ./client
+  - sudo docker tag react-test:v1 washablealt/react-test:v1
 
 script:
   # previously - docker run washable-alt/react-test npm test -- --coverage
   - sudo docker run -e CI=true washablealt/react-test npm test
   
 after_success:
-  - sudo docker build -t washablealt/multi-client ./client
-  - sudo docker build -t washablealt/multi-nginx ./nginx
-  - sudo docker build -t washablealt/multi-server ./server
-  - sudo docker build -t washablealt/multi-worker ./worker
+  - sudo docker build -t multi-client:v1 ./client
+  - sudo docker build -t multi-nginx:v1 ./nginx
+  - sudo docker build -t multi-server:v1 ./server
+  - sudo docker build -t multi-worker:v1 ./worker
 
   # Log in to docker CLI
   - sudo echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push to docker hub
-  - sudo docker tag washablealt/multi-client:firstimagepush washablealt/multi-docker:multi-client
-  - sudo docker tag washablealt/multi-nginx:firstimagepush washablealt/multi-docker:multi-nginx
-  - sudo docker tag washablealt/multi-server:firstimagepush washablealt/multi-docker:multi-server
-  - sudo docker tag washablealt/multi-worker:firstimagepush washablealt/multi-docker:multi-worker
-  - sudo docker push washablealt/multi-docker:multi-client
-  - sudo docker push washablealt/multi-docker:multi-nginx
-  - sudo docker push washablealt/multi-docker:multi-server
-  - sudo docker push washablealt/multi-docker:multi-worker
+  - sudo docker tag multi-client:v1 washablealt/multi-client:v1
+  - sudo docker tag multi-nginx:v1 washablealt/multi-nginx:v1
+  - sudo docker tag multi-server:v1 washablealt/multi-server:v1
+  - sudo docker tag multi-worker:v1 washablealt/multi-worker:v1
+  - sudo docker tag react-test:v1 washablealt/react-test:v1
+  - sudo docker push washablealt/multi-client:v1
+  - sudo docker push washablealt/multi-nginx:v1
+  - sudo docker push washablealt/multi-server:v1
+  - sudo docker push washablealt/multi-worker:v1
+  - sudo docker push washablealt/react-test:v1
